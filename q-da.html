@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cuestionario diario de Dan · El Jardincito</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F2F5EE; --surface:#FFFFFF; --ink:#1C2A1E; --muted:#56665A; --line:#CDD9C8;
+  --green:#2E6A3A; --on-green:#FFFFFF; --green-soft:#E1EEDC;
+  --sun:#9A6A00; --sun-bg:#FBF0D2; --red:#A8362B; --red-bg:#F8E3E0;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121A14; --surface:#1A251C; --ink:#E6EEE3; --muted:#9DB09F; --line:#2F3E32;
+    --green:#74B981; --on-green:#0E1A10; --green-soft:#22382A;
+    --sun:#E8B547; --sun-bg:#382D12; --red:#E58A7E; --red-bg:#3A1D19;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121A14; --surface:#1A251C; --ink:#E6EEE3; --muted:#9DB09F; --line:#2F3E32;
+  --green:#74B981; --on-green:#0E1A10; --green-soft:#22382A;
+  --sun:#E8B547; --sun-bg:#382D12; --red:#E58A7E; --red-bg:#3A1D19;
+  color-scheme:dark;
+}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  font-size:17px;line-height:1.5;-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:640px;margin:0 auto;padding:0 16px 48px}
+header.top{padding:28px 0 12px}
+.brand{color:var(--green);font-weight:700;font-size:15px;margin:0 0 6px}
+h1{font-size:28px;line-height:1.15;margin:0 0 10px;letter-spacing:-.01em}
+.lead{color:var(--muted);margin:0 0 18px;max-width:60ch}
+nav.steps{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);
+  margin:0 -16px;padding:10px 16px;border-bottom:1px solid var(--line);
+  display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+nav.steps::-webkit-scrollbar{display:none}
+nav.steps a{flex:0 0 auto;min-width:44px;height:36px;display:flex;align-items:center;justify-content:center;
+  border-radius:18px;padding:0 10px;font-weight:700;font-size:14px;text-decoration:none;
+  color:var(--sun);background:var(--sun-bg)}
+nav.steps a.ok{color:var(--green);background:var(--green-soft)}
+section.sec{padding:26px 0 8px;border-bottom:1px solid var(--line)}
+h2{font-size:21px;margin:0 0 4px;display:flex;gap:10px;align-items:baseline}
+h2 .code{color:var(--green);font-size:17px}
+.hint{color:var(--muted);font-size:15px;margin:0 0 6px}
+.block{margin:18px 0 6px}
+.ask{font-weight:700;margin:0 0 10px}
+.gate{display:flex;gap:10px}
+.gate button{flex:1;min-height:48px;border-radius:12px;border:2px solid var(--line);background:var(--surface);
+  color:var(--ink);font:inherit;font-weight:700;cursor:pointer}
+.gate button[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:var(--on-green)}
+.row{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;margin:12px 0 0}
+.row-head{display:flex;justify-content:space-between;align-items:center;margin:0 0 6px}
+.row-head strong{font-size:16px}
+.del{background:none;border:none;color:var(--red);font:inherit;font-size:15px;padding:8px;cursor:pointer}
+label.f{display:block;margin:10px 0 0}
+label.f span{display:block;font-size:15px;color:var(--muted);margin:0 0 4px}
+label.f span em{font-style:normal;color:var(--red)}
+input,select,textarea{width:100%;font:inherit;color:var(--ink);background:var(--bg);
+  border:1.5px solid var(--line);border-radius:10px;padding:11px 12px;min-height:48px}
+textarea{min-height:88px;resize:vertical}
+input:focus,select:focus,textarea:focus,button:focus-visible,a:focus-visible{outline:3px solid var(--green);outline-offset:2px}
+.days{display:flex;flex-wrap:wrap;gap:6px}
+.days button{min-width:52px;min-height:44px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);
+  color:var(--ink);font:inherit;font-size:15px;cursor:pointer}
+.days button[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:var(--on-green);font-weight:700}
+.add{margin:12px 0 0;width:100%;min-height:48px;border-radius:12px;border:2px dashed var(--green);
+  background:transparent;color:var(--green);font:inherit;font-weight:700;cursor:pointer}
+.cause{margin:12px 0 0}
+.final{padding:30px 0 0}
+.primary{width:100%;min-height:54px;border-radius:14px;border:none;background:var(--green);color:var(--on-green);
+  font:inherit;font-size:18px;font-weight:700;cursor:pointer}
+.secondary{width:100%;min-height:48px;border-radius:12px;border:2px solid var(--green);background:transparent;
+  color:var(--green);font:inherit;font-weight:700;cursor:pointer;margin-top:10px}
+.missing{background:var(--red-bg);border-radius:14px;padding:14px 16px;margin:16px 0 0}
+.missing p{margin:0 0 6px;font-weight:700;color:var(--red)}
+.missing ul{margin:0;padding-left:20px}
+.missing a{color:var(--ink)}
+.out{margin:16px 0 0}
+.out textarea{min-height:280px;font-size:14px;line-height:1.45;background:var(--surface)}
+.msg{margin:10px 0 0;color:var(--green);font-weight:700;min-height:1.5em}
+.reset{margin-top:28px;background:none;border:none;color:var(--muted);font:inherit;font-size:15px;
+  text-decoration:underline;cursor:pointer;padding:8px 0}
+.reset.armed{color:var(--red);font-weight:700}
+footer{color:var(--muted);font-size:13px;margin-top:22px}
+@media (prefers-reduced-motion:no-preference){.row{animation:in .18s ease-out}@keyframes in{from{opacity:0;transform:translateY(4px)}}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <p class="brand">El Jardincito</p>
+    <h1>Cuestionario diario de Dan</h1>
+    <p class="lead">Para Dan, administrador. Se contesta todos los días: lo que hoy tocó a la sociedad (tus pagos, los repartos, la reinversión, los acuerdos entre socios, los cambios de reglas y los datos de tu compensación que pide Inversión). Contesta cada pregunta; si es Sí, agrega los datos. Al final se genera el texto para pegarlo en el chat Papelería. Lo contestado se guarda en este teléfono por día: al cambiar la fecha se abre el cuestionario de ese día.</p>
+    <label class="f"><span>Día que se reporta <em>*</em></span>
+      <input type="date" id="fechaEntrada"></label>
+  </header>
+  <nav class="steps" id="steps" aria-label="Apartados"></nav>
+  <main id="app"></main>
+  <div class="final">
+    <button class="primary" id="gen">Revisar y generar el texto</button>
+    <div id="missing"></div>
+    <div class="out" id="out" hidden>
+      <textarea id="outText" readonly aria-label="Texto generado"></textarea>
+      <button class="primary" id="share" style="margin-top:12px">Compartir</button>
+      <button class="secondary" id="copy">Copiar el texto</button>
+      <p class="msg" id="msg" role="status"></p>
+    </div>
+    <button class="reset" id="reset">Borrar lo contestado de este día</button>
+    <footer>Q-DA · versión 2.0 · 6 de noviembre de 2026</footer>
+  </div>
+</div>
+<script>
+(function(){
+const VERSION='Q-DA v2.0';
+const KEY='qda-v2';
+const SERV=['Guardería','Pensión','Estética','Entrenamiento','Otro'];
+const PAGO=['Caja del negocio','Oliver, de su bolsillo','Diego, de su bolsillo','Dan, de su bolsillo','Otro'];
+const SOCIO=['Oliver','Diego','Dan'];
+const DIAS=['Sáb','Dom','Lun','Mar','Mié','Jue','Vie'];
+const servFields=[
+  {k:'servicio',l:'Servicio',t:'sel',o:SERV,req:1},
+  {k:'servicioOtro',l:'¿Qué servicio?',t:'text',req:1,show:r=>r.servicio==='Otro'}
+];
+const pagoFields=[
+  {k:'pago',l:'¿Quién lo pagó?',t:'sel',o:PAGO,req:1},
+  {k:'pagoOtro',l:'¿Quién?',t:'text',req:1,show:r=>r.pago==='Otro'}
+];
+const S=[
+ {id:'B4',t:'Pagos de la sociedad a socios',hint:'Lo que la sociedad te pagó hoy y lo que repartió entre los socios.',blocks:[
+  {id:'danFijo',kind:'single',ask:'¿Recibiste hoy tu pago fijo semanal?',out:'¿Dan recibió hoy su pago fijo semanal?',fields:[
+    {k:'monto',l:'Monto',t:'money',req:1}
+  ]},
+  {id:'dan25',kind:'single',ask:'¿Recibiste hoy un pago de tu 25 % de entrenamientos?',out:'¿Dan recibió hoy un pago de su 25 % de entrenamientos?',fields:[
+    {k:'monto',l:'Monto',t:'money',req:1},
+    {k:'nota',l:'A qué cobros corresponde, si se sabe',t:'text',req:0}
+  ]},
+  {id:'repartos',kind:'list',ask:'¿Hubo hoy reparto de dinero a los socios?',item:'Reparto',fields:[
+    {k:'socio',l:'Socio',t:'sel',o:SOCIO,req:1},
+    {k:'monto',l:'Monto',t:'money',req:1}
+  ]}
+ ]},
+ {id:'B5',t:'Reinversión',hint:'Dinero que un socio metió hoy a la sociedad.',blocks:[
+  {id:'reinv',kind:'list',ask:'¿Algún socio metió hoy dinero a la sociedad?',item:'Aportación',fields:[
+    {k:'socio',l:'Socio',t:'sel',o:SOCIO,req:1},
+    {k:'monto',l:'Monto',t:'money',req:1},
+    {k:'destino',l:'Para qué',t:'text',req:1}
+  ]}
+ ]},
+ {id:'B10',t:'Decisiones de la sociedad',hint:'Acuerdos entre socios y cambios de reglas, condiciones o forma de trabajar.',blocks:[
+  {id:'acuerdosSocios',kind:'text',ask:'¿Los socios acordaron algo hoy?',fields:[{k:'texto',l:'Qué acordaron',t:'area',req:1}]},
+  {id:'reglas',kind:'text',ask:'¿Cambió hoy alguna regla, condición o forma de trabajar?',fields:[{k:'texto',l:'Qué cambió',t:'area',req:1}]}
+ ]},
+ {id:'INV',t:'Compensación e inversión conjunta',hint:'Datos que pide el entregable a Inversión y que no salen de ningún otro cuestionario.',blocks:[
+  {id:'incorp',kind:'single',ask:'¿Cambió hoy el estado de tu incorporación?',out:'¿Cambió hoy el estado de la incorporación de Dan?',fields:[
+    {k:'estado',l:'Nuevo estado',t:'sel',o:['Gradual','Completa'],req:1}
+  ]},
+  {id:'comp',kind:'single',ask:'¿Cambió hoy tu compensación?',out:'¿Cambió hoy la compensación de Dan?',fields:[
+    {k:'que',l:'Qué cambió',t:'area',req:1},
+    {k:'desde',l:'Desde cuándo aplica',t:'date',req:1}
+  ]},
+  {id:'rolCarga',kind:'single',ask:'¿Cambió hoy tu rol o tu carga de trabajo?',out:'¿Cambió hoy el rol o la carga de Dan?',fields:[
+    {k:'que',l:'Qué cambió',t:'area',req:1},
+    {k:'desde',l:'Desde cuándo aplica',t:'date',req:1}
+  ]},
+  {id:'planes',kind:'list',ask:'¿Hubo hoy novedades en planes de inversión conjunta?',item:'Plan',fields:[
+    {k:'plan',l:'Qué plan',t:'text',req:1},
+    {k:'estado',l:'En qué va',t:'text',req:1},
+    {k:'capital',l:'Capital comprometido (0 si aún no hay)',t:'money',req:1},
+    {k:'retorno',l:'Retorno proyectado, si ya lo hay',t:'text',req:0}
+  ]}
+ ]}
+];
+
+function today(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function blankBlocks(){const b={};S.forEach(s=>s.blocks.forEach(x=>{b[x.id]={gate:null,cause:'',rows:[],single:{}}}));return b}
+function loadStore(){try{const raw=localStorage.getItem(KEY);if(raw){const d=JSON.parse(raw);if(d&&d.drafts)return d}}catch(e){}return {drafts:{}}}
+let store=loadStore();
+function draftFor(f){const base=blankBlocks();const d=store.drafts[f];if(d)Object.keys(base).forEach(k=>{if(d[k])base[k]=Object.assign(base[k],d[k])});return base}
+let st={fecha:today(),blocks:null};st.blocks=draftFor(st.fecha);
+function save(){store.drafts[st.fecha]=st.blocks;const ks=Object.keys(store.drafts).sort();while(ks.length>10)delete store.drafts[ks.shift()];
+  try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+
+/* ---------- utilidades ---------- */
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const blockDef=id=>{for(const s of S)for(const b of s.blocks)if(b.id===id)return b};
+const visible=(f,r)=>!f.show||f.show(r);
+const filled=v=>Array.isArray(v)?v.length>0:String(v??'').trim()!=='';
+const MESES=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+function fDate(v){if(!v)return'';const[y,m,d]=v.split('-');return d+'/'+m+'/'+y}
+function fLong(v){if(!v)return'';const[y,m,d]=v.split('-');const dt=new Date(+y,+m-1,+d);
+  return ['dom','lun','mar','mié','jue','vie','sáb'][dt.getDay()]+' '+d+' '+MESES[+m-1]+' '+y}
+function num(v){const n=parseFloat(String(v).replace(/[^0-9.\-]/g,''));return isNaN(n)?null:n}
+function fMoney(v){const n=num(v);return n===null?String(v):'$'+n.toLocaleString('es-MX',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function fVal(f,v){if(f.t==='date')return fDate(v);if(f.t==='money')return fMoney(v);if(f.t==='days')return v.join(', ');return String(v).trim()}
+
+/* ---------- validación ---------- */
+function blockMissing(sec,b){
+  const d=st.blocks[b.id],out=[];
+  if(!d.gate){out.push('falta contestar «'+b.ask+'»');return out}
+  if(b.kind==='choice')return out;
+  if(d.gate==='no'){if(b.noCause&&!filled(d.cause))out.push('falta: '+b.noCause);return out}
+  if(b.kind==='list'){
+    if(!d.rows.length)out.push('contestaste Sí en «'+b.ask+'» pero no agregaste datos');
+    d.rows.forEach((r,i)=>b.fields.forEach(f=>{if(f.req&&visible(f,r)&&!filled(r[f.k]))out.push(b.item+' '+(i+1)+': falta '+f.l)}));
+  }else if(b.kind==='single'){
+    b.fields.forEach(f=>{if(f.req&&!filled(d.single[f.k]))out.push('«'+b.ask+'»: falta '+f.l)});
+  }else{
+    const any=b.fields.some(f=>filled(d.single[f.k]));
+    if(!any)out.push('contestaste Sí en «'+b.ask+'» pero no escribiste nada');
+  }
+  return out;
+}
+function secMissing(s){return s.blocks.flatMap(b=>blockMissing(s,b))}
+
+/* ---------- render ---------- */
+function fieldHtml(f,val,path){
+  const id='f-'+path.join('-')+'-'+f.k;
+  const data='data-b="'+path[0]+'" data-r="'+path[1]+'" data-k="'+f.k+'"';
+  const lab='<span>'+esc(f.l)+(f.req?' <em>*</em>':'')+'</span>';
+  if(f.t==='days'){
+    const sel=Array.isArray(val)?val:[];
+    return '<div class="f" style="margin:10px 0 0">'+'<label class="f" style="margin:0">'+lab+'</label><div class="days" role="group" aria-label="'+esc(f.l)+'">'+
+      DIAS.map(d=>'<button type="button" '+data+' data-day="'+d+'" aria-pressed="'+sel.includes(d)+'">'+d+'</button>').join('')+'</div></div>';
+  }
+  let inp;
+  const v=esc(val);
+  if(f.t==='sel')inp='<select id="'+id+'" '+data+'><option value="">Elige…</option>'+f.o.map(o=>'<option'+(o===val?' selected':'')+'>'+esc(o)+'</option>').join('')+'</select>';
+  else if(f.t==='area')inp='<textarea id="'+id+'" '+data+' placeholder="'+esc(f.ph||'')+'">'+v+'</textarea>';
+  else{
+    const type={date:'date',time:'time',money:'text',num:'text',text:'text'}[f.t];
+    const mode=f.t==='money'?' inputmode="decimal"':f.t==='num'?' inputmode="numeric"':'';
+    const ph=f.t==='money'?'0.00':(f.ph||'');
+    inp='<input type="'+type+'" id="'+id+'" '+data+mode+' value="'+v+'" placeholder="'+esc(ph)+'">';
+  }
+  return '<label class="f" for="'+id+'">'+lab+inp+'</label>';
+}
+function blockHtml(b){
+  const d=st.blocks[b.id];
+  let h='<div class="block" id="blk-'+b.id+'"><p class="ask">'+esc(b.ask)+'</p><div class="gate" role="group" aria-label="'+esc(b.ask)+'">'+
+    (b.opts?b.opts.map(o=>[o,o]):[['si','Sí'],['no','No']]).map(([v,t])=>'<button type="button" data-gate="'+esc(v)+'" data-b="'+b.id+'" aria-pressed="'+(d.gate===v)+'">'+esc(t)+'</button>').join('')+'</div>';
+  if(d.gate==='no'&&b.noCause){
+    h+='<div class="cause"><label class="f" for="c-'+b.id+'"><span>'+esc(b.noCause)+' <em>*</em></span>'+
+      '<textarea id="c-'+b.id+'" data-cause="'+b.id+'">'+esc(d.cause)+'</textarea></label></div>';
+  }
+  if(d.gate==='si'){
+    if(b.kind==='list'){
+      d.rows.forEach((r,i)=>{
+        h+='<div class="row"><div class="row-head"><strong>'+esc(b.item)+' '+(i+1)+'</strong>'+
+          '<button type="button" class="del" data-del="'+b.id+'" data-i="'+i+'">Quitar</button></div>'+
+          b.fields.filter(f=>visible(f,r)).map(f=>fieldHtml(f,r[f.k]??(f.t==='days'?[]:''),[b.id,i])).join('')+'</div>';
+      });
+      h+='<button type="button" class="add" data-add="'+b.id+'">Agregar '+esc(b.item.toLowerCase())+'</button>';
+    }else{
+      h+='<div class="row">'+b.fields.map(f=>fieldHtml(f,d.single[f.k]??'',[b.id,'s'])).join('')+'</div>';
+    }
+  }
+  return h+'</div>';
+}
+function render(){
+  document.getElementById('app').innerHTML=S.map(s=>
+    '<section class="sec" id="sec-'+s.id+'"><h2><span class="code">'+s.id+'</span>'+esc(s.t)+'</h2>'+
+    '<p class="hint">'+esc(s.hint)+'</p>'+s.blocks.map(blockHtml).join('')+'</section>').join('');
+  progress();
+}
+function progress(){
+  document.getElementById('steps').innerHTML=S.map(s=>{
+    const ok=secMissing(s).length===0;
+    return '<a href="#sec-'+s.id+'" class="'+(ok?'ok':'')+'" aria-label="'+s.id+' '+esc(s.t)+(ok?', completo':', pendiente')+'">'+s.id+'</a>';
+  }).join('');
+}
+
+/* ---------- eventos ---------- */
+const app=document.getElementById('app');
+app.addEventListener('click',e=>{
+  const g=e.target.closest('[data-gate]');
+  if(g){const d=st.blocks[g.dataset.b];d.gate=g.dataset.gate;
+    const b=blockDef(g.dataset.b);if(d.gate==='si'&&b.kind==='list'&&!d.rows.length)d.rows.push({});
+    save();render();return}
+  const a=e.target.closest('[data-add]');
+  if(a){const d=st.blocks[a.dataset.add];d.rows.push({});save();render();
+    const sel=document.querySelector('[data-b="'+a.dataset.add+'"][data-r="'+(d.rows.length-1)+'"]');if(sel)sel.focus();return}
+  const x=e.target.closest('[data-del]');
+  if(x){st.blocks[x.dataset.del].rows.splice(+x.dataset.i,1);save();render();return}
+  const day=e.target.closest('[data-day]');
+  if(day){const r=day.dataset.r==='s'?st.blocks[day.dataset.b].single:st.blocks[day.dataset.b].rows[+day.dataset.r];
+    const arr=Array.isArray(r[day.dataset.k])?r[day.dataset.k]:[];const v=day.dataset.day;
+    r[day.dataset.k]=arr.includes(v)?arr.filter(z=>z!==v):DIAS.filter(z=>arr.includes(z)||z===v);
+    day.setAttribute('aria-pressed',r[day.dataset.k].includes(v));save();progress();}
+});
+function onField(e){
+  const t=e.target;
+  if(t.dataset.cause){st.blocks[t.dataset.cause].cause=t.value;save();progress();return}
+  if(!t.dataset.k)return;
+  const d=st.blocks[t.dataset.b];
+  const r=t.dataset.r==='s'?d.single:d.rows[+t.dataset.r];
+  r[t.dataset.k]=t.value;save();
+  if(t.tagName==='SELECT'){const y=window.scrollY;render();window.scrollTo(0,y)}else progress();
+}
+app.addEventListener('input',onField);
+app.addEventListener('change',e=>{if(e.target.tagName==='SELECT')onField(e)});
+const fe=document.getElementById('fechaEntrada');
+fe.value=st.fecha;fe.addEventListener('input',()=>{if(!fe.value)return;st.fecha=fe.value;st.blocks=draftFor(st.fecha);render();missBox.innerHTML='';out.hidden=true;});
+
+/* ---------- texto de salida ---------- */
+function buildText(){
+  const L=[];
+  const now=new Date();
+  L.push('=== INICIO '+VERSION+' · '+fDate(st.fecha)+' ===');
+  L.push('CUESTIONARIO DIARIO DE DAN');
+  L.push('Día que se reporta: '+fLong(st.fecha));
+  L.push('Contestó: Dan · generado el '+now.toLocaleDateString('es-MX')+' a las '+now.toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'}));
+  S.forEach(s=>{
+    L.push('');L.push(s.id+'. '+s.t.toUpperCase());
+    s.blocks.forEach(b=>{
+      const d=st.blocks[b.id];
+      const q=b.out||b.ask;
+      if(b.kind==='choice'){L.push(q+' '+d.gate+'.');return}
+      if(d.gate==='no'){L.push(q+' No.');if(b.noCause)L.push('   Motivo: '+d.cause.trim());}
+      else{
+        L.push(q+' Sí.');
+        if(b.kind==='list'){
+          d.rows.forEach((r,i)=>{
+            const parts=b.fields.filter(f=>visible(f,r)&&(f.req||filled(r[f.k]))).map(f=>f.l+': '+(filled(r[f.k])?fVal(f,r[f.k]):'sin dato'));
+            L.push('   '+(i+1)+'. '+parts.join(' · '));
+          });
+        }else{
+          b.fields.filter(f=>filled(d.single[f.k])).forEach(f=>L.push('   '+f.l+': '+fVal(f,d.single[f.k])));
+        }
+      }
+      if(b.id==='cobros'){
+        const rows=d.gate==='si'?d.rows:[];
+        const tot=rows.reduce((a,r)=>a+(num(r.monto)||0),0);
+        const ent=rows.filter(r=>r.servicio==='Entrenamiento');
+        const totE=ent.reduce((a,r)=>a+(num(r.monto)||0),0);
+        L.push('   Total cobrado (suma del cuestionario): '+fMoney(tot));
+        L.push('   De entrenamiento (suma del cuestionario): '+fMoney(totE)+' en '+ent.length+' cobro'+(ent.length===1?'':'s'));
+      }
+    });
+  });
+  L.push('');L.push('=== FIN '+VERSION+' · '+fDate(st.fecha)+' ===');
+  return L.join('\n');
+}
+
+/* ---------- generar, compartir, copiar ---------- */
+const missBox=document.getElementById('missing'),out=document.getElementById('out'),outText=document.getElementById('outText'),msg=document.getElementById('msg');
+document.getElementById('gen').addEventListener('click',()=>{
+  const items=[];
+  if(!filled(st.fecha))items.push({s:null,t:'Falta el día que se reporta'});
+  S.forEach(s=>secMissing(s).forEach(m=>items.push({s:s.id,t:s.id+': '+m})));
+  if(items.length){
+    out.hidden=true;
+    missBox.innerHTML='<div class="missing" role="alert"><p>Faltan '+items.length+' dato'+(items.length===1?'':'s')+' para generar el texto</p><ul>'+
+      items.map(i=>'<li>'+(i.s?'<a href="#sec-'+i.s+'">':'')+esc(i.t)+(i.s?'</a>':'')+'</li>').join('')+'</ul></div>';
+    missBox.scrollIntoView({behavior:'smooth',block:'start'});return;
+  }
+  missBox.innerHTML='';outText.value=buildText();out.hidden=false;msg.textContent='';
+  out.scrollIntoView({behavior:'smooth',block:'start'});
+});
+async function copyText(){
+  try{await navigator.clipboard.writeText(outText.value);msg.textContent='Texto copiado. Pégalo en el chat Papelería.';return true}catch(e){}
+  try{outText.focus();outText.select();if(document.execCommand('copy')){msg.textContent='Texto copiado. Pégalo en el chat Papelería.';return true}}catch(e){}
+  outText.focus();outText.select();msg.textContent='Mantén presionado el texto, elige Seleccionar todo y Copiar.';return false;
+}
+document.getElementById('copy').addEventListener('click',copyText);
+document.getElementById('share').addEventListener('click',async()=>{
+  if(navigator.share){try{await navigator.share({text:outText.value});msg.textContent='Listo. Elige dónde guardarlo o mandarlo.';return}catch(e){if(e&&e.name==='AbortError')return}}
+  const ok=await copyText();if(ok)msg.textContent='Este teléfono no abrió el menú para compartir. El texto ya está copiado: pégalo en el chat Papelería.';
+});
+const reset=document.getElementById('reset');let armed=null;
+reset.addEventListener('click',()=>{
+  if(!armed){reset.classList.add('armed');reset.textContent='Toca otra vez para borrar este día';armed=setTimeout(()=>{armed=null;reset.classList.remove('armed');reset.textContent='Borrar lo contestado de este día'},4000);return}
+  clearTimeout(armed);armed=null;st.blocks=blankBlocks();delete store.drafts[st.fecha];try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){};render();missBox.innerHTML='';out.hidden=true;
+  reset.classList.remove('armed');reset.textContent='Borrar lo contestado de este día';window.scrollTo(0,0);
+});
+
+render();
+})();
+</script>
+</body>
+</html>

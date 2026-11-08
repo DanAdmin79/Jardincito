@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Q-F08 · Checklist de apertura y cierre · El Jardincito</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F2F5EE; --surface:#FFFFFF; --ink:#1C2A1E; --muted:#56665A; --line:#CDD9C8;
+  --green:#2E6A3A; --on-green:#FFFFFF; --green-soft:#E1EEDC;
+  --sun:#8A5E00; --sun-bg:#FBF0D2; --red:#A8362B; --red-bg:#F8E3E0;
+  color-scheme:light; box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#121A14; --surface:#1A251C; --ink:#E6EEE3; --muted:#9DB09F; --line:#2F3E32;
+  --green:#74B981; --on-green:#0E1A10; --green-soft:#22382A;
+  --sun:#E8B547; --sun-bg:#382D12; --red:#E58A7E; --red-bg:#3A1D19; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121A14; --surface:#1A251C; --ink:#E6EEE3; --muted:#9DB09F; --line:#2F3E32;
+  --green:#74B981; --on-green:#0E1A10; --green-soft:#22382A;
+  --sun:#E8B547; --sun-bg:#382D12; --red:#E58A7E; --red-bg:#3A1D19; color-scheme:dark}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 96px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:17px;line-height:1.5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:640px;margin:0 auto;padding:0 16px 48px}
+header.top{padding:28px 0 8px}
+.brand{color:var(--green);font-weight:700;font-size:15px;margin:0 0 6px}
+h1{font-size:27px;line-height:1.15;margin:0 0 10px}
+.lead{color:var(--muted);margin:0 0 14px}
+h2{font-size:20px;margin:28px 0 6px}
+.hint{color:var(--muted);font-size:15px;margin:0 0 8px}
+.board{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);margin:0 -16px;padding:10px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px}
+.big{font-size:40px;font-weight:700;line-height:1;color:var(--green);min-width:2ch;text-align:center}
+.board small{display:block;color:var(--muted);font-size:14px}
+.board .warn{color:var(--red);font-weight:700;font-size:14px}
+label.f{display:block;margin:10px 0 0}
+label.f>span{display:block;font-size:15px;color:var(--muted);margin:0 0 4px}
+label.f em{font-style:normal;color:var(--red)}
+input,textarea{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:11px 12px;min-height:48px}
+textarea{min-height:72px}
+input:focus,textarea:focus,button:focus-visible{outline:3px solid var(--green);outline-offset:2px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;margin:12px 0 0}
+.card.form{border:2px solid var(--green)}
+.card-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.card-head strong{font-size:18px}
+.meta{color:var(--muted);font-size:15px;margin:2px 0 0}
+.flag{display:inline-block;font-size:13px;font-weight:700;border-radius:8px;padding:2px 8px;margin:6px 6px 0 0;background:var(--sun-bg);color:var(--sun)}
+.seg{display:flex;gap:6px}
+.seg button,.tog{flex:1;min-height:48px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;font-weight:700;cursor:pointer}
+.seg button[aria-pressed="true"],.tog[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:var(--on-green)}
+.tog{width:100%;margin-top:10px;text-align:left;padding:0 14px;font-weight:400}
+.tog[aria-pressed="true"]{font-weight:700}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.primary{width:100%;min-height:54px;border-radius:14px;border:none;background:var(--green);color:var(--on-green);font:inherit;font-size:18px;font-weight:700;cursor:pointer;margin-top:14px}
+.secondary{width:100%;min-height:48px;border-radius:12px;border:2px solid var(--green);background:transparent;color:var(--green);font:inherit;font-weight:700;cursor:pointer;margin-top:10px}
+.link{background:none;border:none;color:var(--green);font:inherit;font-size:15px;font-weight:700;padding:8px 0;cursor:pointer}
+.link.red{color:var(--red)}
+.actions{display:flex;justify-content:space-between;gap:10px;margin-top:6px}
+.hours{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.hours label{display:block;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:8px 10px}
+.hours b{display:block;font-size:16px}
+.hours small{display:block;color:var(--muted);font-size:13px}
+.hours small.bad{color:var(--red);font-weight:700}
+.hours input{margin-top:4px;text-align:center}
+.missing{background:var(--red-bg);border-radius:14px;padding:14px 16px;margin:16px 0 0}
+.missing p{margin:0 0 6px;font-weight:700;color:var(--red)}
+.missing ul{margin:0;padding-left:20px}
+.out textarea{min-height:280px;font-size:14px;line-height:1.45;background:var(--surface);margin-top:16px}
+.msg{margin:10px 0 0;color:var(--green);font-weight:700;min-height:1.5em}
+.empty{color:var(--muted);font-size:15px;margin:8px 0 0}
+footer{color:var(--muted);font-size:13px;margin-top:22px}
+.chk{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;min-height:48px;padding:12px;margin:8px 0 0;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;cursor:pointer}
+.chk .box{flex:0 0 26px;height:26px;border-radius:7px;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-weight:700}
+.chk[aria-pressed="true"]{border-color:var(--green)}
+.chk[aria-pressed="true"] .box{background:var(--green);border-color:var(--green);color:var(--on-green)}
+.grid{display:flex;flex-wrap:wrap;gap:8px}
+.grid .chk{width:auto;flex:1 1 92px;margin:0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <p class="brand">El Jardincito · JD-F08</p>
+    <h1>Checklist de apertura y cierre</h1>
+    <p class="lead">Es el formato JD-F08 en el celular, para cuando no se llene la hoja de papel. Un formato por día · apertura 9:30 a 10:00 · cierre 18:00. Al cierre se genera el texto para mandárselo a Dan.</p>
+    <label class="f"><span>Fecha <em>*</em></span><input type="date" id="fecha"></label>
+    <label class="f"><span>Responsable de guardería</span><input data-head="resp" autocomplete="off"></label>
+    <label class="f"><span>Apoyo</span><input data-head="apoyo" autocomplete="off"></label>
+    <label class="f"><span>Limpieza</span><input data-head="limpieza" autocomplete="off"></label>
+  </header>
+  <main id="app"></main>
+  <button class="primary" id="gen" style="margin-top:30px">Generar el texto</button>
+  <div id="missing"></div>
+  <div class="out" id="out" hidden>
+    <textarea id="outText" readonly aria-label="Texto generado"></textarea>
+    <button class="primary" id="share">Compartir por WhatsApp</button>
+    <button class="secondary" id="copy">Copiar el texto</button>
+    <p class="msg" id="msg" role="status"></p>
+  </div>
+  <button class="link red" id="reset" style="margin-top:24px">Borrar todo lo de este día</button>
+  <footer>Q-F08 · versión 1.0 · 7 de noviembre de 2026 · para el formato JD-F08 versión 1.0, octubre 2026</footer>
+</div>
+<script>
+(function(){
+const VERSION='Q-F08 v1.0', KEY='qf08-v1';
+const APERTURA=['Portón principal y cercas cerrados; sin huecos ni puntos de salida','Candados y seguros colocados','Agua limpia y fresca en todas las áreas',
+ 'Recepción, bodega, casita de madera, patios y corral limpios','Popó recogida de las áreas','Botiquín completo y a la vista','Directorio de veterinarios a la vista',
+ 'Agenda del día y conteo inicial (JD-F06)','Perros de estética del día considerados en el cupo','Roles del día asignados'];
+const CIERRE=['Conteo final: 0 perros en el lugar','Registros de salida completos (JD-F06)','Pertenencias devueltas o guardadas y etiquetadas','Limpieza de áreas y popó recogida',
+ 'Agua cambiada y platos lavados','Bodegas ordenadas (patio y estética)','Registro de incidentes del día completo (JD-F07)','Registro diario enviado a los dueños (JD-F05)',
+ 'Portones, cercas y candados cerrados','Registros del día archivados'];
+const AGUA=['10:30','12:00','13:30','15:00','16:30'], LIMP=['11:30','13:00','14:30','16:00'], FOTOS=['Mañana','Tarde'];
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const clean=s=>String(s??'').replace(/\|/g,'/').replace(/[ \t]+/g,' ').trim();
+const pad=n=>String(n).padStart(2,'0');
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())};
+const fDate=v=>{if(!v)return'';const[y,m,d]=v.split('-');return d+'/'+m+'/'+y};
+
+let store=(()=>{try{const r=localStorage.getItem(KEY);if(r){const d=JSON.parse(r);if(d&&d.days)return d}}catch(e){}return{days:{}}})();
+const blankDay=()=>({head:{},chk:{},obs:'',firmas:{}});
+let fecha=today(), day=load(fecha);
+function load(f){return Object.assign(blankDay(),store.days[f]||{})}
+function save(){store.days[fecha]=day;const ks=Object.keys(store.days).sort();while(ks.length>14)delete store.days[ks.shift()];
+  try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+
+const chk=(id,label)=>'<button type="button" class="chk" data-chk="'+id+'" aria-pressed="'+!!day.chk[id]+'"><span class="box">'+(day.chk[id]?'✓':'')+'</span><span>'+esc(label)+'</span></button>';
+function render(){
+  $('app').innerHTML=
+    '<h2>Apertura (9:30 – 10:00)</h2>'+APERTURA.map((t,i)=>chk('A'+(i+1),t)).join('')+
+    '<h2>Cierre (18:00)</h2>'+CIERRE.map((t,i)=>chk('C'+(i+1),t)).join('')+
+    '<h2>Durante el día</h2>'+
+    '<p class="hint">Cambio de agua (cada hora y media o cuando se ensucie)</p><div class="grid">'+AGUA.map(h=>chk('W'+h,h)).join('')+'</div>'+
+    '<p class="hint" style="margin-top:14px">Conteo al cambiar de área</p>'+chk('CA','Se hizo cada vez que un grupo cambió de área')+
+    '<p class="hint" style="margin-top:14px">Limpieza y popó</p><div class="grid">'+LIMP.map(h=>chk('L'+h,h)).join('')+'</div>'+
+    '<p class="hint" style="margin-top:14px">Fotos y videos enviados a los grupos</p><div class="grid">'+FOTOS.map(h=>chk('F'+h,h)).join('')+'</div>'+
+    '<h2>Observaciones del día</h2><textarea id="obs" aria-label="Observaciones del día">'+esc(day.obs)+'</textarea>'+
+    '<h2>Nombres</h2><p class="hint">La firma se pone en la hoja impresa.</p>'+
+    '<label class="f"><span>Apertura: nombre</span><input data-firma="apertura" value="'+esc(day.firmas.apertura)+'"></label>'+
+    '<label class="f"><span>Cierre: nombre</span><input data-firma="cierre" value="'+esc(day.firmas.cierre)+'"></label>'+
+    '<label class="f"><span>Revisó (Oliver o Belia)</span><input data-firma="reviso" value="'+esc(day.firmas.reviso)+'"></label>';
+}
+function loadHeader(){$('fecha').value=fecha;document.querySelectorAll('[data-head]').forEach(x=>x.value=day.head[x.dataset.head]||'')}
+$('app').addEventListener('click',e=>{const b=e.target.closest('[data-chk]');if(!b)return;const id=b.dataset.chk;day.chk[id]=!day.chk[id];
+  b.setAttribute('aria-pressed',day.chk[id]);b.querySelector('.box').textContent=day.chk[id]?'✓':'';save()});
+$('app').addEventListener('input',e=>{const t=e.target;if(t.id==='obs')day.obs=t.value;else if(t.dataset.firma)day.firmas[t.dataset.firma]=t.value;save()});
+document.querySelectorAll('[data-head]').forEach(x=>x.addEventListener('input',()=>{day.head[x.dataset.head]=x.value;save()}));
+$('fecha').addEventListener('input',()=>{if(!$('fecha').value)return;fecha=$('fecha').value;day=load(fecha);loadHeader();render();$('out').hidden=true;$('missing').innerHTML=''});
+
+const B=v=>clean(v)||'(en blanco)', S=id=>day.chk[id]?'sí':'no';
+function build(){
+  const L=[];
+  L.push('=== INICIO '+VERSION+' · '+fDate(fecha)+' ===');
+  L.push('FORMATO: JD-F08 v1.0 · Checklist de apertura y cierre');
+  L.push('Fecha: '+fDate(fecha));
+  L.push('Responsable de guardería: '+B(day.head.resp));
+  L.push('Apoyo: '+B(day.head.apoyo));
+  L.push('Limpieza: '+B(day.head.limpieza));
+  APERTURA.forEach((t,i)=>L.push('Apertura '+(i+1)+' | '+t+' | '+S('A'+(i+1))));
+  CIERRE.forEach((t,i)=>L.push('Cierre '+(i+1)+' | '+t+' | '+S('C'+(i+1))));
+  L.push('Cambio de agua | '+AGUA.map(h=>h+' = '+S('W'+h)).join(' | '));
+  L.push('Conteo al cambiar de área | Se hizo cada vez que un grupo cambió de área | '+S('CA'));
+  L.push('Limpieza y popó | '+LIMP.map(h=>h+' = '+S('L'+h)).join(' | '));
+  L.push('Fotos y videos enviados a los grupos | '+FOTOS.map(h=>h+' = '+S('F'+h)).join(' | '));
+  L.push('Observaciones del día:');
+  const ob=String(day.obs||'').split('\n').map(clean).filter(Boolean);L.push(ob.length?ob.map(x=>'   '+x).join('\n'):'   (en blanco)');
+  L.push('Apertura, nombre: '+B(day.firmas.apertura));
+  L.push('Cierre, nombre: '+B(day.firmas.cierre));
+  L.push('Revisó: '+B(day.firmas.reviso));
+  L.push('=== FIN '+VERSION+' · '+fDate(fecha)+' ===');
+  return L.join('\n');
+}
+$('gen').addEventListener('click',()=>{$('missing').innerHTML='';$('outText').value=build();$('out').hidden=false;$('msg').textContent='';$('out').scrollIntoView({behavior:'smooth',block:'start'})});
+async function copyText(){
+  try{await navigator.clipboard.writeText($('outText').value);$('msg').textContent='Texto copiado. Pégalo en el chat con Dan.';return true}catch(e){}
+  try{$('outText').select();if(document.execCommand('copy')){$('msg').textContent='Texto copiado. Pégalo en el chat con Dan.';return true}}catch(e){}
+  $('outText').select();$('msg').textContent='Mantén presionado el texto, elige Seleccionar todo y Copiar.';return false}
+$('copy').addEventListener('click',copyText);
+$('share').addEventListener('click',async()=>{
+  if(navigator.share){try{await navigator.share({text:$('outText').value});$('msg').textContent='Listo. Elige WhatsApp y mándalo a Dan.';return}catch(e){if(e&&e.name==='AbortError')return}}
+  if(await copyText())$('msg').textContent='Este teléfono no abrió el menú para compartir. El texto ya está copiado: pégalo en WhatsApp con Dan.'});
+let armed=null;
+$('reset').addEventListener('click',()=>{const b=$('reset');
+  if(!armed){b.textContent='Toca otra vez para borrar este día';armed=setTimeout(()=>{armed=null;b.textContent='Borrar todo lo de este día'},4000);return}
+  clearTimeout(armed);armed=null;b.textContent='Borrar todo lo de este día';day=blankDay();delete store.days[fecha];
+  try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}loadHeader();render();$('out').hidden=true});
+loadHeader();render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Q-F02 · Historia clínica del perro · El Jardincito</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F2F5EE; --surface:#FFFFFF; --ink:#1C2A1E; --muted:#56665A; --line:#CDD9C8;
+  --green:#2E6A3A; --on-green:#FFFFFF; --green-soft:#E1EEDC;
+  --sun:#8A5E00; --sun-bg:#FBF0D2; --red:#A8362B; --red-bg:#F8E3E0;
+  color-scheme:light; box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#121A14; --surface:#1A251C; --ink:#E6EEE3; --muted:#9DB09F; --line:#2F3E32;
+  --green:#74B981; --on-green:#0E1A10; --green-soft:#22382A;
+  --sun:#E8B547; --sun-bg:#382D12; --red:#E58A7E; --red-bg:#3A1D19; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121A14; --surface:#1A251C; --ink:#E6EEE3; --muted:#9DB09F; --line:#2F3E32;
+  --green:#74B981; --on-green:#0E1A10; --green-soft:#22382A;
+  --sun:#E8B547; --sun-bg:#382D12; --red:#E58A7E; --red-bg:#3A1D19; color-scheme:dark}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 96px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:17px;line-height:1.5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:640px;margin:0 auto;padding:0 16px 48px}
+header.top{padding:28px 0 8px}
+.brand{color:var(--green);font-weight:700;font-size:15px;margin:0 0 6px}
+h1{font-size:27px;line-height:1.15;margin:0 0 10px}
+.lead{color:var(--muted);margin:0 0 14px}
+h2{font-size:20px;margin:28px 0 6px}
+.hint{color:var(--muted);font-size:15px;margin:0 0 8px}
+.board{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);margin:0 -16px;padding:10px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px}
+.big{font-size:40px;font-weight:700;line-height:1;color:var(--green);min-width:2ch;text-align:center}
+.board small{display:block;color:var(--muted);font-size:14px}
+.board .warn{color:var(--red);font-weight:700;font-size:14px}
+label.f{display:block;margin:10px 0 0}
+label.f>span{display:block;font-size:15px;color:var(--muted);margin:0 0 4px}
+label.f em{font-style:normal;color:var(--red)}
+input,textarea{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:11px 12px;min-height:48px}
+textarea{min-height:72px}
+input:focus,textarea:focus,button:focus-visible{outline:3px solid var(--green);outline-offset:2px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;margin:12px 0 0}
+.card.form{border:2px solid var(--green)}
+.card-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.card-head strong{font-size:18px}
+.meta{color:var(--muted);font-size:15px;margin:2px 0 0}
+.flag{display:inline-block;font-size:13px;font-weight:700;border-radius:8px;padding:2px 8px;margin:6px 6px 0 0;background:var(--sun-bg);color:var(--sun)}
+.seg{display:flex;gap:6px}
+.seg button,.tog{flex:1;min-height:48px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;font-weight:700;cursor:pointer}
+.seg button[aria-pressed="true"],.tog[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:var(--on-green)}
+.tog{width:100%;margin-top:10px;text-align:left;padding:0 14px;font-weight:400}
+.tog[aria-pressed="true"]{font-weight:700}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.primary{width:100%;min-height:54px;border-radius:14px;border:none;background:var(--green);color:var(--on-green);font:inherit;font-size:18px;font-weight:700;cursor:pointer;margin-top:14px}
+.secondary{width:100%;min-height:48px;border-radius:12px;border:2px solid var(--green);background:transparent;color:var(--green);font:inherit;font-weight:700;cursor:pointer;margin-top:10px}
+.link{background:none;border:none;color:var(--green);font:inherit;font-size:15px;font-weight:700;padding:8px 0;cursor:pointer}
+.link.red{color:var(--red)}
+.actions{display:flex;justify-content:space-between;gap:10px;margin-top:6px}
+.hours{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.hours label{display:block;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:8px 10px}
+.hours b{display:block;font-size:16px}
+.hours small{display:block;color:var(--muted);font-size:13px}
+.hours small.bad{color:var(--red);font-weight:700}
+.hours input{margin-top:4px;text-align:center}
+.missing{background:var(--red-bg);border-radius:14px;padding:14px 16px;margin:16px 0 0}
+.missing p{margin:0 0 6px;font-weight:700;color:var(--red)}
+.missing ul{margin:0;padding-left:20px}
+.out textarea{min-height:280px;font-size:14px;line-height:1.45;background:var(--surface);margin-top:16px}
+.msg{margin:10px 0 0;color:var(--green);font-weight:700;min-height:1.5em}
+.empty{color:var(--muted);font-size:15px;margin:8px 0 0}
+footer{color:var(--muted);font-size:13px;margin-top:22px}
+.seg button{min-height:44px}
+.scale label{margin-top:10px}
+.sec-t{margin:18px 0 0;font-weight:700;color:var(--green)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <p class="brand">El Jardincito · JD-F02</p>
+    <h1>Historia clínica del perro</h1>
+    <p class="lead">Es el formato JD-F02 en el celular, para cuando no se llene la hoja de papel. Para que el equipo conozca indicaciones y cuidados especiales. Una hoja por perro (al ingreso o al actualizarse). Al cierre se genera el texto con todas las hojas del día para mandárselo a Dan. Las firmas se ponen en la hoja impresa.</p>
+    <label class="f"><span>Fecha <em>*</em></span><input type="date" id="fecha"></label>
+  </header>
+  <main>
+    <h2>Historias clínicas del día</h2>
+    <button class="primary" id="btnAdd">Agregar historia clínica</button>
+    <div id="formArea"></div>
+    <div id="rows"></div>
+    <button class="primary" id="gen" style="margin-top:30px">Generar el texto</button>
+    <div id="missing"></div>
+    <div class="out" id="out" hidden>
+      <textarea id="outText" readonly aria-label="Texto generado"></textarea>
+      <button class="primary" id="share">Compartir por WhatsApp</button>
+      <button class="secondary" id="copy">Copiar el texto</button>
+      <p class="msg" id="msg" role="status"></p>
+    </div>
+    <button class="link red" id="reset" style="margin-top:24px">Borrar todo lo de este día</button>
+    <footer>Q-F02 · versión 1.0 · 7 de noviembre de 2026 · para el formato JD-F02 versión 1.0, octubre 2026</footer>
+  </main>
+</div>
+<script>
+(function(){
+const VERSION='Q-F02 v1.0', KEY='qf02-v1';
+const SN=['Sí','No'];
+// Esquema en el orden de la hoja. t: text | time | date | area | multi | seg
+const SCHEMA=[
+ {sec:'1. DATOS GENERALES'},
+ {k:'perro',l:'Nombre del perro',t:'text',req:1},{k:'dueno',l:'Dueño',t:'text'},
+ {k:'peso',l:'Peso actual (kg)',t:'text'},{k:'fllenado',l:'Fecha de llenado',t:'date'},
+ {sec:'2. VETERINARIO DE CONFIANZA'},
+ {k:'vet',l:'Nombre y clínica',t:'text'},{k:'vettel',l:'Teléfono del veterinario',t:'text'},
+ {k:'horario',l:'Horario / urgencias 24 h',t:'text'},{k:'ultconsulta',l:'Última consulta',t:'text'},
+ {sec:'3. VACUNAS Y PREVENCIÓN'},
+ {k:'v1_ult',l:'Rabia (obligatoria) · Fecha de última aplicación',t:'text'},{k:'v1_prox',l:'Rabia (obligatoria) · Próxima / vigencia',t:'text'},{k:'v1_prod',l:'Rabia (obligatoria) · Producto o tipo',t:'text'},
+ {k:'v2_ult',l:'Vacuna múltiple (obligatoria) · Fecha de última aplicación',t:'text'},{k:'v2_prox',l:'Vacuna múltiple (obligatoria) · Próxima / vigencia',t:'text'},{k:'v2_prod',l:'Vacuna múltiple (obligatoria) · Producto o tipo',t:'text'},
+ {k:'multTipo',l:'Vacuna múltiple · tipo',t:'multi',o:['Quíntuple','Séxtuple','Otra']},
+ {k:'v3_ult',l:'Bordetella / tos de las perreras (recomendada) · Fecha de última aplicación',t:'text'},{k:'v3_prox',l:'Bordetella / tos de las perreras (recomendada) · Próxima / vigencia',t:'text'},{k:'v3_prod',l:'Bordetella / tos de las perreras (recomendada) · Producto o tipo',t:'text'},
+ {k:'v4_ult',l:'Otras (leptospirosis, etc.) · Fecha de última aplicación',t:'text'},{k:'v4_prox',l:'Otras (leptospirosis, etc.) · Próxima / vigencia',t:'text'},{k:'v4_prod',l:'Otras (leptospirosis, etc.) · Producto o tipo',t:'text'},
+ {k:'v5_ult',l:'Desparasitación interna (obligatoria) · Fecha de última aplicación',t:'text'},{k:'v5_prox',l:'Desparasitación interna (obligatoria) · Próxima / vigencia',t:'text'},{k:'v5_prod',l:'Desparasitación interna (obligatoria) · Producto o tipo',t:'text'},
+ {k:'v6_ult',l:'Antipulgas y garrapatas (obligatorio) · Fecha de última aplicación',t:'text'},{k:'v6_prox',l:'Antipulgas y garrapatas (obligatorio) · Próxima / vigencia',t:'text'},{k:'v6_prod',l:'Antipulgas y garrapatas (obligatorio) · Producto o tipo',t:'text'},
+ {k:'cartilla',l:'Cartilla verificada',t:'multi',o:['Rabia (obligatoria)','Vacuna múltiple (obligatoria)','Bordetella / tos de las perreras (recomendada)','Otras (leptospirosis, etc.)','Desparasitación interna (obligatoria)','Antipulgas y garrapatas (obligatorio)']},
+ {sec:'4. ESTERILIZACIÓN Y SALUD REPRODUCTIVA'},
+ {k:'esterilizado',l:'Esterilizado',t:'seg',o:SN},{k:'fcirugia',l:'Fecha de la cirugía',t:'text'},
+ {k:'celo',l:'Fecha del último celo (hembras)',t:'text'},{k:'gestacion',l:'¿Gestación o lactancia?',t:'seg',o:['No','Sí']},
+ {sec:'5. SALUD Y ANTECEDENTES (marcar lo que aplique y detallar abajo)'},
+ {k:'antecedentes',l:'Antecedentes',t:'multi',o:['Alergias (alimentos, medicamentos, picaduras)','Problemas de piel, oídos u ojos','Digestivos (vómito, diarrea frecuente)',
+   'Articulares (cadera, rodillas, columna)','Cardíacos','Respiratorios / hocico corto (riesgo de golpe de calor)','Convulsiones o epilepsia','Desmayos',
+   'Diabetes u otra enfermedad crónica','Cirugías previas','Lesiones recientes','Ceguera, sordera u otra discapacidad']},
+ {k:'detalle',l:'Detalle de lo marcado (cuál, desde cuándo, cuidados que requiere)',t:'area'},
+ {sec:'6. MEDICAMENTOS, ALIMENTACIÓN Y ACTIVIDAD'},
+ {k:'medicamentos',l:'Medicamentos actuales',t:'seg',o:['Ninguno','Sí (se detallan y autorizan en el JD-C06)']},
+ {k:'alimento',l:'Alimento (marca / tipo)',t:'text'},{k:'cantidad',l:'Cantidad y horarios',t:'text'},
+ {k:'restricciones',l:'Restricciones de ejercicio (saltos, calor, escaleras)',t:'text'},
+ {sec:'7. INDICACIONES ESPECIALES DEL VETERINARIO O COSAS QUE EL EQUIPO DEBE SABER'},
+ {k:'indicaciones',l:'Indicaciones especiales',t:'area'},
+ {sec:'FIRMAS (se firman en la hoja impresa)'},
+ {k:'firmaDueno',l:'Nombre del dueño (para la línea de firma)',t:'text'},{k:'fechaFirma',l:'Fecha',t:'date'},
+ {k:'revisado',l:'Revisado por (El Jardíncito)',t:'text'}
+];
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const clean=s=>String(s??'').replace(/\|/g,'/').replace(/[ \t]+/g,' ').trim();
+const pad=n=>String(n).padStart(2,'0');
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())};
+const fDate=v=>{if(!v)return'';const[y,m,d]=v.split('-');return d+'/'+m+'/'+y};
+
+let store=(()=>{try{const r=localStorage.getItem(KEY);if(r){const d=JSON.parse(r);if(d&&d.days)return d}}catch(e){}return{days:{}}})();
+const blankDay=()=>({hojas:[]});
+let fecha=today(), day=load(fecha), editing=null;
+function load(f){return Object.assign(blankDay(),store.days[f]||{})}
+function save(){store.days[fecha]=day;const ks=Object.keys(store.days).sort();while(ks.length>14)delete store.days[ks.shift()];
+  try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+
+function renderRows(){
+  $('rows').innerHTML=day.hojas.map((r,i)=>'<div class="card"><div class="card-head"><strong>Hoja '+(i+1)+'. '+esc(r.perro)+'</strong><span class="meta">'+esc(r.peso?r.peso+' kg':'')+'</span></div>'+
+    '<p class="meta">Dueño: '+esc(r.dueno||'—')+'</p>'+
+    '<div class="actions"><span></span><button class="link" data-edit="'+i+'">Corregir</button></div></div>').join('')||'<p class="empty">Sin hojas todavía.</p>';
+}
+function field(f,r){
+  if(f.sec)return '<p class="sec-t">'+esc(f.sec)+'</p>';
+  const v=r[f.k];
+  if(f.t==='seg'||f.t==='multi'){const sel=f.t==='multi'?(v||[]):[v];
+    return '<label class="f"><span>'+esc(f.l)+(f.req?' <em>*</em>':'')+'</span></label><div class="seg" role="group" aria-label="'+esc(f.l)+'"'+(f.t==='multi'?' data-multi="1"':'')+'>'+
+      f.o.map(o=>'<button type="button" data-seg="'+f.k+'" data-v="'+esc(o)+'" aria-pressed="'+sel.includes(o)+'">'+esc(o)+'</button>').join('')+'</div>'}
+  if(f.t==='area')return '<label class="f"><span>'+esc(f.l)+'</span><textarea data-k="'+f.k+'">'+esc(v)+'</textarea></label>';
+  return '<label class="f"><span>'+esc(f.l)+(f.req?' <em>*</em>':'')+'</span><input'+(f.t==='time'?' type="time"':f.t==='date'?' type="date"':'')+' data-k="'+f.k+'" value="'+esc(v)+'"></label>';
+}
+function openForm(i){
+  editing={i};const r=i!=null?day.hojas[i]:{};
+  $('formArea').innerHTML='<div class="card form"><div class="card-head"><strong>'+(i==null?'Hoja nueva':'Corregir hoja '+(i+1))+'</strong></div>'+
+    SCHEMA.map(f=>field(f,r)).join('')+
+    '<p id="formErr" style="color:var(--red);font-weight:700;margin:8px 0 0"></p><button class="primary" id="fSave">Guardar hoja</button>'+
+    '<div class="actions"><button class="link" id="fCancel">Cancelar</button>'+(i!=null?'<button class="link red" id="fDel">Borrar esta hoja</button>':'')+'</div></div>';
+  const c=$('formArea').firstChild;c.scrollIntoView({behavior:'smooth',block:'start'});if(i==null)c.querySelector('input').focus();
+}
+function closeForm(){editing=null;$('formArea').innerHTML=''}
+$('formArea').addEventListener('click',e=>{
+  const s=e.target.closest('[data-seg]');
+  if(s){const on=s.getAttribute('aria-pressed')!=='true';
+    if(s.parentNode.dataset.multi)s.setAttribute('aria-pressed',on);
+    else s.parentNode.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b===s&&on));return}
+  if(e.target.id==='fCancel'){closeForm();return}
+  if(e.target.id==='fDel'){day.hojas.splice(editing.i,1);save();closeForm();renderRows();return}
+  if(e.target.id==='fSave'){const c=$('formArea'),v={};
+    c.querySelectorAll('[data-k]').forEach(x=>v[x.dataset.k]=x.tagName==='TEXTAREA'?x.value:clean(x.value));
+    SCHEMA.filter(f=>f.t==='seg'||f.t==='multi').forEach(f=>{const on=[...c.querySelectorAll('[data-seg="'+f.k+'"][aria-pressed="true"]')].map(b=>b.dataset.v);
+      v[f.k]=f.t==='multi'?on:(on[0]||'')});
+    if(!clean(v.perro)){$('formErr').textContent='Falta el nombre del perro.';return}
+    if(editing.i==null)day.hojas.push(v);else day.hojas[editing.i]=v;save();closeForm();renderRows()}
+});
+$('rows').addEventListener('click',e=>{const ed=e.target.closest('[data-edit]');if(ed)openForm(+ed.dataset.edit)});
+$('btnAdd').addEventListener('click',()=>openForm(null));
+$('fecha').addEventListener('input',()=>{if(!$('fecha').value)return;fecha=$('fecha').value;day=load(fecha);closeForm();renderRows();$('out').hidden=true;$('missing').innerHTML=''});
+
+const B=v=>clean(v)||'(en blanco)';
+function build(){
+  const L=[];
+  L.push('=== INICIO '+VERSION+' · '+fDate(fecha)+' ===');
+  L.push('FORMATO: JD-F02 v1.0 · Historia clínica del perro');
+  L.push('Fecha: '+fDate(fecha));
+  L.push('Hojas: '+day.hojas.length);
+  day.hojas.forEach((r,i)=>{
+    L.push('--- Hoja '+(i+1)+' ---');
+    SCHEMA.forEach(f=>{
+      if(f.sec)return;
+      if(f.t==='multi'){L.push(f.l+' | '+f.o.map(o=>o+' = '+((r[f.k]||[]).includes(o)?'sí':'no')).join(' | '));return}
+      if(f.g){L.push(f.g+' | '+f.l+' | '+B(r[f.k]));return}
+      if(f.t==='area'){L.push(f.l+':');const ls=String(r[f.k]||'').split('\n').map(clean).filter(Boolean);L.push(ls.length?ls.map(x=>'   '+x).join('\n'):'   (en blanco)');return}
+      L.push(f.l+': '+(f.t==='date'?(r[f.k]?fDate(r[f.k]):'(en blanco)'):B(r[f.k])));
+    });
+  });
+  L.push('=== FIN '+VERSION+' · '+fDate(fecha)+' ===');
+  return L.join('\n');
+}
+$('gen').addEventListener('click',()=>{
+  const miss=[];if(editing)miss.push('Hay una hoja abierta sin guardar');if(!day.hojas.length)miss.push('No hay ninguna hoja');
+  if(miss.length){$('out').hidden=true;$('missing').innerHTML='<div class="missing" role="alert"><p>No se puede generar todavía</p><ul>'+miss.map(m=>'<li>'+esc(m)+'</li>').join('')+'</ul></div>';return}
+  $('missing').innerHTML='';$('outText').value=build();$('out').hidden=false;$('msg').textContent='';$('out').scrollIntoView({behavior:'smooth',block:'start'})});
+async function copyText(){
+  try{await navigator.clipboard.writeText($('outText').value);$('msg').textContent='Texto copiado. Pégalo en el chat con Dan.';return true}catch(e){}
+  try{$('outText').select();if(document.execCommand('copy')){$('msg').textContent='Texto copiado. Pégalo en el chat con Dan.';return true}}catch(e){}
+  $('outText').select();$('msg').textContent='Mantén presionado el texto, elige Seleccionar todo y Copiar.';return false}
+$('copy').addEventListener('click',copyText);
+$('share').addEventListener('click',async()=>{
+  if(navigator.share){try{await navigator.share({text:$('outText').value});$('msg').textContent='Listo. Elige WhatsApp y mándalo a Dan.';return}catch(e){if(e&&e.name==='AbortError')return}}
+  if(await copyText())$('msg').textContent='Este teléfono no abrió el menú para compartir. El texto ya está copiado: pégalo en WhatsApp con Dan.'});
+let armed=null;
+$('reset').addEventListener('click',()=>{const b=$('reset');
+  if(!armed){b.textContent='Toca otra vez para borrar este día';armed=setTimeout(()=>{armed=null;b.textContent='Borrar todo lo de este día'},4000);return}
+  clearTimeout(armed);armed=null;b.textContent='Borrar todo lo de este día';day=blankDay();delete store.days[fecha];
+  try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}closeForm();renderRows();$('out').hidden=true});
+$('fecha').value=fecha;renderRows();
+})();
+</script>
+</body>
+</html>

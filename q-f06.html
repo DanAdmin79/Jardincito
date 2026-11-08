@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Q-F06 · Llegada, salida y conteo · El Jardincito</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F2F5EE; --surface:#FFFFFF; --ink:#1C2A1E; --muted:#56665A; --line:#CDD9C8;
+  --green:#2E6A3A; --on-green:#FFFFFF; --green-soft:#E1EEDC;
+  --sun:#8A5E00; --sun-bg:#FBF0D2; --red:#A8362B; --red-bg:#F8E3E0;
+  color-scheme:light; box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#121A14; --surface:#1A251C; --ink:#E6EEE3; --muted:#9DB09F; --line:#2F3E32;
+  --green:#74B981; --on-green:#0E1A10; --green-soft:#22382A;
+  --sun:#E8B547; --sun-bg:#382D12; --red:#E58A7E; --red-bg:#3A1D19; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121A14; --surface:#1A251C; --ink:#E6EEE3; --muted:#9DB09F; --line:#2F3E32;
+  --green:#74B981; --on-green:#0E1A10; --green-soft:#22382A;
+  --sun:#E8B547; --sun-bg:#382D12; --red:#E58A7E; --red-bg:#3A1D19; color-scheme:dark}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 96px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:17px;line-height:1.5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:640px;margin:0 auto;padding:0 16px 48px}
+header.top{padding:28px 0 8px}
+.brand{color:var(--green);font-weight:700;font-size:15px;margin:0 0 6px}
+h1{font-size:27px;line-height:1.15;margin:0 0 10px}
+.lead{color:var(--muted);margin:0 0 14px}
+h2{font-size:20px;margin:28px 0 6px}
+.hint{color:var(--muted);font-size:15px;margin:0 0 8px}
+.board{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);margin:0 -16px;padding:10px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px}
+.big{font-size:40px;font-weight:700;line-height:1;color:var(--green);min-width:2ch;text-align:center}
+.board small{display:block;color:var(--muted);font-size:14px}
+.board .warn{color:var(--red);font-weight:700;font-size:14px}
+label.f{display:block;margin:10px 0 0}
+label.f>span{display:block;font-size:15px;color:var(--muted);margin:0 0 4px}
+label.f em{font-style:normal;color:var(--red)}
+input,textarea{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:11px 12px;min-height:48px}
+textarea{min-height:72px}
+input:focus,textarea:focus,button:focus-visible{outline:3px solid var(--green);outline-offset:2px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;margin:12px 0 0}
+.card.form{border:2px solid var(--green)}
+.card-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.card-head strong{font-size:18px}
+.meta{color:var(--muted);font-size:15px;margin:2px 0 0}
+.flag{display:inline-block;font-size:13px;font-weight:700;border-radius:8px;padding:2px 8px;margin:6px 6px 0 0;background:var(--sun-bg);color:var(--sun)}
+.seg{display:flex;gap:6px}
+.seg button,.tog{flex:1;min-height:48px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;font-weight:700;cursor:pointer}
+.seg button[aria-pressed="true"],.tog[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:var(--on-green)}
+.tog{width:100%;margin-top:10px;text-align:left;padding:0 14px;font-weight:400}
+.tog[aria-pressed="true"]{font-weight:700}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.primary{width:100%;min-height:54px;border-radius:14px;border:none;background:var(--green);color:var(--on-green);font:inherit;font-size:18px;font-weight:700;cursor:pointer;margin-top:14px}
+.secondary{width:100%;min-height:48px;border-radius:12px;border:2px solid var(--green);background:transparent;color:var(--green);font:inherit;font-weight:700;cursor:pointer;margin-top:10px}
+.link{background:none;border:none;color:var(--green);font:inherit;font-size:15px;font-weight:700;padding:8px 0;cursor:pointer}
+.link.red{color:var(--red)}
+.actions{display:flex;justify-content:space-between;gap:10px;margin-top:6px}
+.hours{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.hours label{display:block;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:8px 10px}
+.hours b{display:block;font-size:16px}
+.hours small{display:block;color:var(--muted);font-size:13px}
+.hours small.bad{color:var(--red);font-weight:700}
+.hours input{margin-top:4px;text-align:center}
+.missing{background:var(--red-bg);border-radius:14px;padding:14px 16px;margin:16px 0 0}
+.missing p{margin:0 0 6px;font-weight:700;color:var(--red)}
+.missing ul{margin:0;padding-left:20px}
+.out textarea{min-height:280px;font-size:14px;line-height:1.45;background:var(--surface);margin-top:16px}
+.msg{margin:10px 0 0;color:var(--green);font-weight:700;min-height:1.5em}
+.empty{color:var(--muted);font-size:15px;margin:8px 0 0}
+footer{color:var(--muted);font-size:13px;margin-top:22px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <p class="brand">El Jardincito · JD-F06</p>
+    <h1>Registro de llegada, salida y conteo</h1>
+    <p class="lead">Es el formato JD-F06 en el celular, para cuando no se llene la hoja de papel. Cada perro ocupa un renglón: se abre al llegar y se completa al salir. Al cierre se genera el texto para mandárselo a Dan.</p>
+    <label class="f"><span>Fecha <em>*</em></span><input type="date" id="fecha"></label>
+    <label class="f"><span>Responsable</span><input id="resp" autocomplete="off"></label>
+    <label class="f"><span>Apoyo</span><input id="apoyo" autocomplete="off"></label>
+  </header>
+  <main>
+    <h2>Conteo por hora · perros en el lugar</h2>
+    <div class="hours" id="hours"></div>
+    <h2>Renglones</h2>
+    <p class="hint">Servicio: G = guardería · P = pensión · E = estética · T = entrenamiento. Conteo = perros en el lugar después de cada llegada o salida.</p>
+    <button class="primary" id="btnArrive">Registrar llegada</button>
+    <div id="formArea"></div>
+    <div id="rows"></div>
+    <button class="primary" id="gen" style="margin-top:30px">Generar el texto</button>
+    <div id="missing"></div>
+    <div class="out" id="out" hidden>
+      <textarea id="outText" readonly aria-label="Texto generado"></textarea>
+      <button class="primary" id="share">Compartir por WhatsApp</button>
+      <button class="secondary" id="copy">Copiar el texto</button>
+      <p class="msg" id="msg" role="status"></p>
+    </div>
+    <button class="link red" id="reset" style="margin-top:24px">Borrar todo lo de este día</button>
+    <footer>Q-F06 · versión 1.1 · 7 de noviembre de 2026 · para el formato JD-F06 versión 1.0, octubre 2026</footer>
+  </main>
+</div>
+<script>
+(function(){
+const VERSION='Q-F06 v1.1', KEY='qf06-v1';
+const SERV=['G','P','E','T'];
+const HORAS=['10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00'];
+const POR_HOJA=14;
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const clean=s=>String(s??'').replace(/\|/g,'/').replace(/\s+/g,' ').trim();
+const pad=n=>String(n).padStart(2,'0');
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())};
+const nowHM=()=>{const d=new Date();return pad(d.getHours())+':'+pad(d.getMinutes())};
+const fDate=v=>{if(!v)return'';const[y,m,d]=v.split('-');return d+'/'+m+'/'+y};
+
+let store=(()=>{try{const r=localStorage.getItem(KEY);if(r){const d=JSON.parse(r);if(d&&d.days)return d}}catch(e){}return{days:{}}})();
+const blankDay=()=>({resp:'',apoyo:'',rows:[],horas:{}});
+let fecha=today(), day=load(fecha), editing=null;
+function load(f){const d=store.days[f];const b=Object.assign(blankDay(),d||{});b.rows=(b.rows||[]).filter(r=>!r.carry);return b}
+function save(){store.days[fecha]=day;const ks=Object.keys(store.days).sort();while(ks.length>14)delete store.days[ks.shift()];
+  try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+
+function renderHours(){
+  $('hours').innerHTML=HORAS.map(h=>'<label><b>'+h+'</b><input inputmode="numeric" data-h="'+h+'" value="'+esc(day.horas[h]??'')+'" aria-label="Perros en el lugar a las '+h+'"></label>').join('');
+}
+function renderRows(){
+  $('rows').innerHTML=day.rows.map((r,i)=>{
+    const n=i%POR_HOJA+1,hoja=Math.floor(i/POR_HOJA)+1;
+    return '<div class="card"><div class="card-head"><strong>'+n+'. '+esc(r.perro)+'</strong><span class="meta">'+(hoja>1?'hoja '+hoja+' · ':'')+esc(r.serv||'')+'</span></div>'+
+      '<p class="meta">Llegada '+esc(r.llegada||'—')+' · entrega '+esc(r.entrega||'—')+(r.area?' · área '+esc(r.area):'')+'</p>'+
+      (r.salida||r.recoge?'<p class="meta">Salida '+esc(r.salida||'—')+' · recoge '+esc(r.recoge||'—')+'</p>':'')+
+      (r.conteo?'<p class="meta">Conteo '+esc(r.conteo)+'</p>':'')+
+      '<div class="actions">'+(r.salida?'':'<button class="link" data-out="'+i+'">Registrar salida</button>')+
+      '<button class="link" data-edit="'+i+'">Corregir</button></div></div>'}).join('')||'<p class="empty">Sin renglones todavía.</p>';
+}
+function render(){renderHours();renderRows()}
+
+const tog=(id,label,on)=>'<button type="button" class="tog" data-tog="'+id+'" aria-pressed="'+!!on+'">'+(on?'✓ ':'')+esc(label)+'</button>';
+const fld=(k,l,v,type)=>'<label class="f"><span>'+l+'</span><input'+(type?' type="'+type+'"':'')+(k==='conteo'?' inputmode="numeric"':'')+' data-k="'+k+'" value="'+esc(v)+'"></label>';
+function openForm(mode,i){
+  editing={mode,i};const r=i!=null?day.rows[i]:{};let h='';
+  const arr=mode==='in'||mode==='edit', dep=mode==='outF'||mode==='edit';
+  if(arr){
+    h+=fld('perro','Perro <em>*</em>',r.perro)+
+      '<label class="f"><span>Servicio</span></label><div class="seg" role="group" aria-label="Servicio">'+SERV.map(k=>
+      '<button type="button" data-seg="serv" data-v="'+k+'" aria-pressed="'+(r.serv===k)+'">'+k+'</button>').join('')+'</div>'+
+      fld('entrega','Quién lo entrega',r.entrega)+fld('llegada','Hora llegada',r.llegada||(mode==='in'?nowHM():''),'time')+
+      fld('pert','Pertenencias',r.pert)+tog('etiq','Pertenencias etiquetadas',r.etiq)+fld('area','Área',r.area);
+  }
+  if(mode==='outF')h+='<p class="meta" style="margin:0"><strong>'+esc(r.perro)+'</strong></p>';
+  if(dep)h+=fld('salida','Hora salida',r.salida||(mode==='outF'?nowHM():''),'time')+fld('recoge','Quién recoge',r.recoge)+tog('idok','Identificación verificada',r.idok);
+  h+=fld('conteo','Conteo',r.conteo);
+  $('formArea').innerHTML='<div class="card form"><div class="card-head"><strong>'+({in:'Llegada',outF:'Salida',edit:'Corregir renglón'}[mode])+'</strong></div>'+h+
+    '<p id="formErr" style="color:var(--red);font-weight:700;margin:8px 0 0"></p><button class="primary" id="fSave">Guardar</button>'+
+    '<div class="actions"><button class="link" id="fCancel">Cancelar</button>'+(mode==='edit'?'<button class="link red" id="fDel">Borrar este renglón</button>':'')+'</div></div>';
+  const c=$('formArea').firstChild;c.scrollIntoView({behavior:'smooth',block:'start'});const f=c.querySelector('input');if(f&&mode==='in')f.focus();
+}
+function closeForm(){editing=null;$('formArea').innerHTML=''}
+$('formArea').addEventListener('click',e=>{
+  const s=e.target.closest('[data-seg]');
+  if(s){const on=s.getAttribute('aria-pressed')!=='true';s.parentNode.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b===s&&on));return}
+  const t=e.target.closest('[data-tog]');
+  if(t){const on=t.getAttribute('aria-pressed')!=='true';t.setAttribute('aria-pressed',on);t.textContent=(on?'✓ ':'')+t.textContent.replace(/^✓ /,'');return}
+  if(e.target.id==='fCancel'){closeForm();return}
+  if(e.target.id==='fDel'){day.rows.splice(editing.i,1);save();closeForm();render();return}
+  if(e.target.id==='fSave'){
+    const c=$('formArea'),v={};
+    c.querySelectorAll('[data-k]').forEach(x=>v[x.dataset.k]=clean(x.value));
+    const sg=c.querySelector('[data-seg][aria-pressed="true"]');if(c.querySelector('[data-seg]'))v.serv=sg?sg.dataset.v:'';
+    c.querySelectorAll('[data-tog]').forEach(b=>v[b.dataset.tog]=b.getAttribute('aria-pressed')==='true');
+    const {mode,i}=editing,r=Object.assign({},i!=null?day.rows[i]:{},v);
+    if(!r.perro){$('formErr').textContent='Falta el perro.';return}
+    if(mode==='in')day.rows.push(r);else day.rows[i]=r;save();closeForm();render();
+  }
+});
+$('rows').addEventListener('click',e=>{const o=e.target.closest('[data-out]');if(o){openForm('outF',+o.dataset.out);return}
+  const ed=e.target.closest('[data-edit]');if(ed)openForm('edit',+ed.dataset.edit)});
+$('btnArrive').addEventListener('click',()=>openForm('in',null));
+$('hours').addEventListener('input',e=>{const h=e.target.dataset.h;if(!h)return;const v=clean(e.target.value);if(v==='')delete day.horas[h];else day.horas[h]=v;save()});
+
+function loadHeader(){$('fecha').value=fecha;$('resp').value=day.resp;$('apoyo').value=day.apoyo}
+$('fecha').addEventListener('input',()=>{if(!$('fecha').value)return;fecha=$('fecha').value;day=load(fecha);closeForm();loadHeader();render();$('missing').innerHTML='';$('out').hidden=true});
+$('resp').addEventListener('input',()=>{day.resp=$('resp').value;save()});
+$('apoyo').addEventListener('input',()=>{day.apoyo=$('apoyo').value;save()});
+
+const B=v=>clean(v)||'(en blanco)';
+function build(){
+  const L=[];
+  L.push('=== INICIO '+VERSION+' · '+fDate(fecha)+' ===');
+  L.push('FORMATO: JD-F06 v1.0 · Registro de llegada, salida y conteo');
+  L.push('Fecha: '+fDate(fecha));
+  L.push('Responsable: '+B(day.resp));
+  L.push('Apoyo: '+B(day.apoyo));
+  L.push('Conteo por hora: '+HORAS.map(h=>h+' = '+B(day.horas[h])).join(' | '));
+  const hojas=Math.max(1,Math.ceil(day.rows.length/POR_HOJA));
+  L.push('Renglones: '+day.rows.length+' · hojas: '+hojas);
+  day.rows.forEach((r,i)=>{
+    L.push('Hoja '+(Math.floor(i/POR_HOJA)+1)+' · renglón '+(i%POR_HOJA+1)+' | Perro: '+B(r.perro)+' | Servicio: '+B(r.serv)+' | Quién lo entrega: '+B(r.entrega)+
+      ' | Hora llegada: '+B(r.llegada)+' | Pertenencias: '+B(r.pert)+' | Etiquetadas: '+(r.etiq?'sí':'no')+' | Área: '+B(r.area)+
+      ' | Hora salida: '+B(r.salida)+' | Quién recoge: '+B(r.recoge)+' | ID verificada: '+(r.idok?'sí':'no')+' | Conteo: '+B(r.conteo));
+  });
+  L.push('=== FIN '+VERSION+' · '+fDate(fecha)+' ===');
+  return L.join('\n');
+}
+$('gen').addEventListener('click',()=>{
+  const miss=[];if(editing)miss.push('Hay un renglón abierto sin guardar');if(!day.rows.length&&!Object.keys(day.horas).length&&!day.resp)miss.push('El formato está vacío');
+  if(miss.length){$('out').hidden=true;$('missing').innerHTML='<div class="missing" role="alert"><p>No se puede generar todavía</p><ul>'+miss.map(m=>'<li>'+esc(m)+'</li>').join('')+'</ul></div>';return}
+  $('missing').innerHTML='';$('outText').value=build();$('out').hidden=false;$('msg').textContent='';$('out').scrollIntoView({behavior:'smooth',block:'start'});
+});
+async function copyText(){
+  try{await navigator.clipboard.writeText($('outText').value);$('msg').textContent='Texto copiado. Pégalo en el chat con Dan.';return true}catch(e){}
+  try{$('outText').select();if(document.execCommand('copy')){$('msg').textContent='Texto copiado. Pégalo en el chat con Dan.';return true}}catch(e){}
+  $('outText').select();$('msg').textContent='Mantén presionado el texto, elige Seleccionar todo y Copiar.';return false}
+$('copy').addEventListener('click',copyText);
+$('share').addEventListener('click',async()=>{
+  if(navigator.share){try{await navigator.share({text:$('outText').value});$('msg').textContent='Listo. Elige WhatsApp y mándalo a Dan.';return}catch(e){if(e&&e.name==='AbortError')return}}
+  if(await copyText())$('msg').textContent='Este teléfono no abrió el menú para compartir. El texto ya está copiado: pégalo en WhatsApp con Dan.'});
+let armed=null;
+$('reset').addEventListener('click',()=>{const b=$('reset');
+  if(!armed){b.textContent='Toca otra vez para borrar este día';armed=setTimeout(()=>{armed=null;b.textContent='Borrar todo lo de este día'},4000);return}
+  clearTimeout(armed);armed=null;b.textContent='Borrar todo lo de este día';day=blankDay();delete store.days[fecha];
+  try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}closeForm();loadHeader();render();$('out').hidden=true;$('missing').innerHTML=''});
+loadHeader();render();
+})();
+</script>
+</body>
+</html>
